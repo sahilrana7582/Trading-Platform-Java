@@ -1,0 +1,14 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.example</groupId>
+	<artifactId>trading-platform</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>trading-platform</name>
+	<description>Demo project for Spring Boot</description>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>stock-service</module>
+	</modules>
+
+</project>
