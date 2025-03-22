@@ -52,7 +52,8 @@ public class StockService {
             double percentageChange = (random.nextDouble() * 0.02) - 0.01; // +/- 1%
             BigDecimal changeAmount = stock.getStockPrice().multiply(BigDecimal.valueOf(percentageChange));
             stock.setStockPrice(stock.getStockPrice().add(changeAmount).max(BigDecimal.ZERO));
-            CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("stock_price_updates", "Price update for " + stock.getStockName() + ": " + stock.getStockPrice());
+            String message = String.format("{\"Stock Name\": \"%s\", \"symbol\": \"%s\", \"price\": \"%s\"}", stock.getStockName(), stock.getSymbol(), stock.getStockPrice().toString());
+            CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("stock_price_updates", message);
 
             future.thenAccept(result -> {
                 log.info("Event sent successfully to topic: {}, partition: {}, offset: {}",

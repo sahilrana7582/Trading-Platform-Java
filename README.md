@@ -8,7 +8,7 @@ A high-performance, real-time trading platform built on a robust microservices a
 
 ## Architecture Overview
 
-![Architecture Diagram](https://via.placeholder.com/800x400?text=Trading+Platform+Architecture)
+![Architecture Diagram](https://www.mermaidchart.com/raw/aa18a06c-aaa4-4adb-ad2b-e4a0d440f26e?theme=light&version=v0.1&format=svg)
 
 Our trading platform is built on a modern microservices architecture utilizing the following technologies:
 
