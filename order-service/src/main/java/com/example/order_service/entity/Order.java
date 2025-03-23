@@ -22,6 +22,9 @@ public class Order {
     private String id;
 
     @Column
+    private String userId;
+
+    @Column
     private String stockSymbol;
 
     private Integer quantity;

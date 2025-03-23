@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/order", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -19,9 +20,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/place")
-    public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto){
-        orderService.placeOrder(orderDto.getStockSymbol(), orderDto.getQuantity(), orderDto.getOrderType());
+    @PostMapping("/place/{userId}")
+    public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto, @PathVariable("userId") String userId) {
+        orderService.placeOrder(orderDto.getStockSymbol(), orderDto.getQuantity(), orderDto.getOrderType(), userId);
         return ResponseEntity.ok("Order placed successfully");
     }
 
@@ -37,5 +38,12 @@ public class OrderController {
 
         System.out.println("Full URL: " + fullUrl);
         return ResponseEntity.ok(fullUrl);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<List<OrderDto>> getOrdersByUserId(@PathVariable("userId") String userId)
+    {
+        List<OrderDto> orders = orderService.getOrdersByUserId(userId);
+        return ResponseEntity.ok(orders);
     }
 }

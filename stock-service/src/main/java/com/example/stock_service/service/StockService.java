@@ -49,7 +49,7 @@ public class StockService {
         List<Stock> stocks = stockRepository.findAll();
         Random random = new Random();
         for (Stock stock : stocks) {
-            double percentageChange = (random.nextDouble() * 0.02) - 0.01; // +/- 1%
+            double percentageChange = (random.nextDouble() * 0.05) - 0.01; // +/- 1%
             BigDecimal changeAmount = stock.getStockPrice().multiply(BigDecimal.valueOf(percentageChange));
             stock.setStockPrice(stock.getStockPrice().add(changeAmount).max(BigDecimal.ZERO));
             String message = String.format("{\"Stock Name\": \"%s\", \"symbol\": \"%s\", \"price\": \"%s\"}", stock.getStockName(), stock.getSymbol(), stock.getStockPrice().toString());

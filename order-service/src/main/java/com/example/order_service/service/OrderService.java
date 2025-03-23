@@ -1,6 +1,7 @@
 package com.example.order_service.service;
 
 
+import com.example.order_service.dto.OrderDto;
 import com.example.order_service.entity.Order;
 import com.example.order_service.repository.OrderRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,8 +16,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -52,7 +55,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void placeOrder(String stockSymbol, Integer quantity, String orderType) {
+    public void placeOrder(String stockSymbol, Integer quantity, String orderType, String userId) {
         BigDecimal stockPrice = lastestStockPrices.getOrDefault(stockSymbol, BigDecimal.ZERO);
         BigDecimal totalCost = stockPrice.multiply(BigDecimal.valueOf(quantity));
         Order newOrder = new Order();
@@ -60,6 +63,7 @@ public class OrderService {
         newOrder.setStockSymbol(stockSymbol);
         newOrder.setQuantity(quantity);
         newOrder.setPrice(totalCost);
+        newOrder.setUserId(userId);
         orderRepository.save(newOrder);
         publishOrderEvent(newOrder);
     }
@@ -67,6 +71,21 @@ public class OrderService {
     private void publishOrderEvent(Order order) {
         String orderMessage = String.format("{\"orderType\": \"%s\", \"stockSymbol\": \"%s\", \"quantity\": %d, \"price\": %s}", order.getOrderType(), order.getStockSymbol(), order.getQuantity(), order.getPrice());
         kafkaTemplate.send(orderEventsTopic, orderMessage);
+    }
+
+    public List<OrderDto> getOrdersByUserId(String userId) {
+        List<Order> orders = orderRepository.findByUserId(userId);
+
+
+        List<OrderDto> orderDtos = orders.stream().map(order -> new OrderDto(
+                order.getStockSymbol(),
+                order.getQuantity(),
+                order.getOrderType(),
+                order.getPrice()
+        )).collect(Collectors.toList());
+
+        return orderDtos;
+
     }
 
 
