@@ -1,3 +1,4 @@
+# Standard Java/Maven ignores
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -31,3 +32,60 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Thesis Microservices Secrets ###
+# Secret files
+**/src/main/resources/application-*.properties
+**/src/main/resources/application-*.yml
+**/src/main/resources/application-*.yaml
+!**/src/main/resources/application-example.properties
+!**/src/main/resources/application-example.yml
+!**/src/main/resources/application-example.yaml
+
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example
+
+# Certificates and keys
+**/*.pem
+**/*.key
+**/*.crt
+**/*.jks
+**/*.p12
+**/*.pfx
+**/*.der
+**/*.keystore
+**/*.truststore
+
+# Config files that might contain secrets
+**/config/*.json
+**/config/*.conf
+!**/config/*.example.json
+!**/config/*.example.conf
+
+# Docker secrets
+**/docker-compose.override.yml
+**/docker-secret/
+
+# Kubernetes secrets
+**/k8s/*secret*.yaml
+**/k8s/*secret*.yml
+
+# Logs
+**/logs/
+**/*.log
+
+# Database dumps or scripts with sensitive data
+**/*.sql
+**/*.dump
+!**/schema/*.sql
+!**/migration/*.sql
+
+# Documentation that might contain sensitive information
+**/docs/private/
+**/docs/internal/
+
+# Thesis drafts and personal notes (if they contain sensitive information)
+/thesis-drafts/
+/notes/
