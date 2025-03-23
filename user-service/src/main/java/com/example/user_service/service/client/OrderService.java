@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 
-@FeignClient(name = "api-gateway", url = "http://localhost:8080/api/order")
+@FeignClient(name = "api-gateway", url = "http://localhost:8000/api/order")
 public interface OrderService {
 
 
