@@ -82,10 +82,7 @@ build/
 !**/schema/*.sql
 !**/migration/*.sql
 
-# Documentation that might contain sensitive information
 **/docs/private/
 **/docs/internal/
-
-# Thesis drafts and personal notes (if they contain sensitive information)
 /thesis-drafts/
 /notes/
