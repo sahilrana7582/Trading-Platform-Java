@@ -9,6 +9,10 @@
 
 	<modules>
 		<module>stock-service</module>
+		<module>order-service</module>
+		<module>api-gateway</module>
+		<module>eureka-discovery</module>
+
 	</modules>
 
 </project>
