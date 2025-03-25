@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class OrderDto {
 
+    private String id;
     private String stockSymbol;
     private Integer quantity;
     private String orderType;

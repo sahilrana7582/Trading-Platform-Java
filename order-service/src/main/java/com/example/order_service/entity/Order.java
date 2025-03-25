@@ -2,10 +2,7 @@ package com.example.order_service.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -15,6 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Table(name = "order_table")
 @Setter
+@Builder
 public class Order {
 
     @Id
@@ -32,4 +30,11 @@ public class Order {
     private String orderType;
 
     private BigDecimal price;
+
+    private Long positionId;
+
+    private Long portfolioId;
+
+    private String status;
+
 }

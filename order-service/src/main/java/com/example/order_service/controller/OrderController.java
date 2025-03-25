@@ -2,7 +2,9 @@ package com.example.order_service.controller;
 
 
 import com.example.order_service.dto.OrderDto;
+import com.example.order_service.dto.OrderWithPositionsDto;
 import com.example.order_service.service.OrderService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,9 +23,22 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/place/{userId}")
-    public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto, @PathVariable("userId") String userId) {
-        orderService.placeOrder(orderDto.getStockSymbol(), orderDto.getQuantity(), orderDto.getOrderType(), userId);
+    public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto, @PathVariable("userId") String userId) throws JsonProcessingException {
+        orderService.placeOrder(orderDto.getStockSymbol(), orderDto.getQuantity(), orderDto.getOrderType(), userId, null);
         return ResponseEntity.ok("Order placed successfully");
+    }
+
+    @PostMapping("/sell/{userId}/{positionId}")
+    public ResponseEntity<String> sellOrder(@RequestBody OrderDto orderDto, @PathVariable("userId") String userId, @PathVariable("positionId") Long positionId) throws JsonProcessingException {
+        orderService.placeOrder(orderDto.getStockSymbol(), orderDto.getQuantity(), orderDto.getOrderType(), userId, positionId);
+        return ResponseEntity.ok("Order closed successfully");
+    }
+
+
+    @GetMapping("/user/position/{orderId}")
+    public ResponseEntity<OrderWithPositionsDto> getOrdersByPortfolioId(@PathVariable("orderId") String orderId) {
+        OrderWithPositionsDto orders = orderService.getOrderWithPositions(orderId);
+        return ResponseEntity.ok(orders);
     }
 
 
